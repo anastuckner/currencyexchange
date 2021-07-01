@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Currency Exchange</title>
+	<script type="text/javascript">
+		// a87fa1c222d91d88f92ee3375bfddbb3 API ACCESS CODE
+		document.addEventListener('DOMContentLoaded', function(){
+
+			document.querySelector('form').onsubmit = function(){
+				const currency = document.querySelector('#currency').value;
+				const target = document.querySelector('#target').value;
+				fetch(`https://api.exchangerate.host/convert?from=${currency}&to=${target}`)
+				.then(response => response.json())
+				.then(data =>{
+						
+						const rate = data.info["rate"];
+						if (rate!== null){
+							document.querySelector('#result').innerHTML = `1 ${currency} is ${rate.toFixed(3)} ${target}`;
+						}
+						else{
+							document.querySelector('#result').innerHTML = 'Invalid Currency';
+						}
+					})
+				.catch(error =>{
+						console.log('Error', error);
+					});	
+				
+			return false;
+			}
+			});	
+	</script>
+</head>
+<body>
+	<form>
+		<input id="currency" placeholder="Currency" type="text">
+		<input id="target" placeholder="Target Currency" type="text">
+
+		<input type="submit" value="Convert" name="">
+	</form>
+	<div id="result">
+
+
+	</div>
+</body>
+</html>
